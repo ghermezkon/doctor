@@ -1,16 +1,60 @@
-// http://ionicframework.com/docs/theming/
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 
-// App Global Sass
-// --------------------------------------------------
-// Put style rules here that you want to apply globally. These
-// styles are for the entire app and not just one component.
-// Additionally, this file can be also used as an entry point
-// to import other Sass files to be included in the output CSS.
-//
-// Shared Sass variables, which can be used to adjust Ionic's
-// default Sass variables, belong in "theme/variables.scss".
-//
-// To declare rules for a specific mode, create a child rule
-// for the .md, .ios, or .wp mode classes. The mode class is
-// automatically applied to the <body> element in the app.
+html {
+  box-sizing: border-box;
+}
+
+html,
+body
+{
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  direction:rtl !important;
+}
+// .scroll-content { padding-bottom: 0!important; }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0; 
+}
+.item-center{
+    display:flex;align-items:center;justify-content:center;
+}
+ion-item.transparent_item  {
+    background: rgba(0, 0, 0, 0) !important;
+    border: none !important;
+    outline: none !important;
+    direction:rtl;
+}
+ion-item.transparent_item * ion-label, ion-item.transparent_item * ion-input, ion-item.transparent_item * ion-icon {
+    color:#f4f4f4 !important;
+}
+ion-navbar.toolbar{
+    direction:ltr;
+    text-align: right;
+}
+ion-navbar.toolbar > button{
+    text-align:right;
+    color:#f4f4f4;
+}
+ion-navbar.toolbar > button > span > ion-icon::before{
+    content:'\f287';
+    color:#f4f4f4;
+}
+ion-title>div.toolbar-title{
+    font-size:1.8rem !important;
+}
+button.back-button > span.button-inner > span.back-button-text{
+    color:#f4f4f4;
+}
+input.searchbar-input{
+    direction:rtl !important;
+    text-align:right !important;
+}

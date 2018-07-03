@@ -21,7 +21,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      backButtonText: 'بازگشت',
+      scrollPadding: false,
+      scrollAssist: true,
+      autoFocusAssist: false,
+      monthNames: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+      animate: false,
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

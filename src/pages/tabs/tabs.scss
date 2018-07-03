@@ -1,0 +1,21 @@
+tabs-page{
+    a.tab-button[aria-selected="true"] > ion-icon.tab-button-icon{
+        position: fixed;
+        border-radius: 100% !important;
+        z-index:10001 !important;
+        width:48px !important;
+        height:56px !important;        
+    }
+    .ion-ios-medical-sign-outline,
+    .ion-ios-medical-sign,
+    .ion-md-medical-sign,
+    .ion-md-medical-sign-outline {
+        background-repeat: no-repeat;
+        background-position:center;
+        background-size: contain;
+        background-image: url('../assets/imgs/medical.svg') !important;
+    }
+    .tabbar{
+        background-color: transparent !important;
+    }
+}
