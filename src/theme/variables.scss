@@ -16,8 +16,13 @@ $colors: (
   light:      #f4f4f4,
   dark:       #455A64,
   redColor: #BF360C,
+  cyanColor:#C2185B,
   borderColor: rgb(247, 247, 247) 
 );
 @import "ionic.theme.default";
 @import "ionic.ionicons";
 @import "iransans";
+
+@import "/assets/webfonts/fontawesome.min.css";
+@import "/assets/webfonts/fa-light.min.css";
+

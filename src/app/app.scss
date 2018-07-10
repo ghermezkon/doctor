@@ -54,7 +54,11 @@ ion-title>div.toolbar-title{
 button.back-button > span.button-inner > span.back-button-text{
     color:#f4f4f4;
 }
-input.searchbar-input{
-    direction:rtl !important;
-    text-align:right !important;
+.error-msg{
+    width:75%;right:3%;transform: translateX(-3%);
+    color: red;
+    font-size:1.2rem;
+}
+.toastCss{
+    text-align:center;
 }

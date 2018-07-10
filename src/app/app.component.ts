@@ -5,12 +5,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewChild } from '@angular/core';
+import { OstanPage } from '../pages/ostan/ostan';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  rootPage:any = OstanPage;
   @ViewChild(Nav) nav: Nav;
   //---------------------------------------------------------------------------------
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

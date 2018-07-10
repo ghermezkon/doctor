@@ -6,4 +6,52 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
+    <form novalidate [formGroup]="dataForm">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col>
+                    <ion-list>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-sort-numeric-up"></i>
+                                    <span> پیش شماره استان</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="ostan_code" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.ostan">
+                            <div class="error-msg" *ngIf="dataForm.get('ostan_code').hasError(validation.type) && 
+                                    (dataForm.get('ostan_code').dirty || dataForm.get('ostan_code').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-file-alt"></i>
+                                    <span> نام استان</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="ostan_name" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.ostan">
+                            <div class="error-msg" *ngIf="dataForm.get('ostan_name').hasError(validation.type) && 
+                                    (dataForm.get('ostan_name').dirty || dataForm.get('ostan_name').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save_ostan(dataForm.value)">ذخیره</button>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+    <ion-list [virtualScroll]="data_list | async" [approxItemHeight]="'40px'">
+            <ion-item *virtualItem="let t">
+                <h2 ion-text>{{t.ostan_name}}</h2>
+            </ion-item>
+        </ion-list>
+
 </ion-content>
