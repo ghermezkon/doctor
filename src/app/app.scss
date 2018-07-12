@@ -27,15 +27,15 @@ input[type=number]::-webkit-outer-spin-button {
 .item-center{
     display:flex;align-items:center;justify-content:center;
 }
-ion-item.transparent_item  {
-    background: rgba(0, 0, 0, 0) !important;
-    border: none !important;
-    outline: none !important;
-    direction:rtl;
-}
-ion-item.transparent_item * ion-label, ion-item.transparent_item * ion-input, ion-item.transparent_item * ion-icon {
-    color:#f4f4f4 !important;
-}
+// ion-item.transparent_item  {
+//     background: rgba(0, 0, 0, 0) !important;
+//     border: none !important;
+//     outline: none !important;
+//     direction:rtl;
+// }
+// ion-item.transparent_item * ion-label, ion-item.transparent_item * ion-input, ion-item.transparent_item * ion-icon {
+//     color:#f4f4f4 !important;
+// }
 ion-navbar.toolbar{
     direction:ltr;
     text-align: right;

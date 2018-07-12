@@ -7,7 +7,6 @@ $item-md-divider-background: transparent;
 $item-wp-divider-background: transparent;
 $app-direction: rtl;
 
-
 @import "ionic.globals";
 $colors: (
   primary:    #488aff,
@@ -26,3 +25,4 @@ $colors: (
 @import "/assets/webfonts/fontawesome.min.css";
 @import "/assets/webfonts/fa-light.min.css";
 
+$infinite-scroll-loading-color: map-get($colors,redColor);

@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,
+    HomePage,OstanPage,
     TabsPage
   ],
   imports: [
@@ -38,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,
+    HomePage,OstanPage,
     TabsPage,
   ],
   providers: [

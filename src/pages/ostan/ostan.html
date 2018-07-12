@@ -48,10 +48,35 @@
             </ion-row>
         </ion-grid>
     </form>
-    <ion-list [virtualScroll]="data_list | async" [approxItemHeight]="'40px'">
-            <ion-item *virtualItem="let t">
-                <h2 ion-text>{{t.ostan_name}}</h2>
+    <ion-list inset>
+        <ion-item color="dark">
+            <ion-row text-center no-padding no-margin>
+                <ion-col col-2>
+                    <h2 ion-text>کد استان</h2>
+                </ion-col>
+                <ion-col>
+                    <h2 ion-text>نام استان</h2>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item-sliding *ngFor="let t of data_list">
+            <ion-item>
+                <ion-row text-center no-padding no-margin>
+                    <ion-col col-2>
+                        <h2 ion-text>{{t.ostan_code}}</h2>
+                    </ion-col>
+                    <ion-col>
+                        <h2 ion-text>{{t.ostan_name}}</h2>
+                    </ion-col>
+                </ion-row>
             </ion-item>
-        </ion-list>
+            <ion-item-options side="right">
+                <button ion-button (click)="share(slidingItem)">Share</button>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>
