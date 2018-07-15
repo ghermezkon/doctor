@@ -27,15 +27,19 @@ input[type=number]::-webkit-outer-spin-button {
 .item-center{
     display:flex;align-items:center;justify-content:center;
 }
-// ion-item.transparent_item  {
-//     background: rgba(0, 0, 0, 0) !important;
-//     border: none !important;
-//     outline: none !important;
-//     direction:rtl;
-// }
-// ion-item.transparent_item * ion-label, ion-item.transparent_item * ion-input, ion-item.transparent_item * ion-icon {
-//     color:#f4f4f4 !important;
-// }
+input.searchbar-input{
+    direction:rtl !important;
+    text-align:right !important;
+}
+ion-alert > div.alert-wrapper{
+    border-radius: 10px !important;
+}
+ion-alert > div.alert-wrapper >  div.alert-head{
+    background-color:#2196f3 !important;
+    color:#fff !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
 ion-navbar.toolbar{
     direction:ltr;
     text-align: right;
@@ -47,6 +51,9 @@ ion-navbar.toolbar > button{
 ion-navbar.toolbar > button > span > ion-icon::before{
     content:'\f287';
     color:#f4f4f4;
+}
+ion-item-options{
+    background-color: map-get($colors, primary);        
 }
 ion-title>div.toolbar-title{
     font-size:1.8rem !important;

@@ -5,6 +5,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { ViewChild } from '@angular/core';
+import { CityPage } from '../pages/ostan/city/city';
 import { OstanPage } from '../pages/ostan/ostan';
 
 @Component({

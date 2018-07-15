@@ -20,13 +20,17 @@ export class HttpService {
         return this.http.get(this.urlPoint + 'currentDate');
     }
     //----------------------------------------------------------
-    public getAllOstan() {
-        return this.http.get(this.urlPoint + this.urlInit + 'ostan')
+    getAll(table_name) {
+        return this.http.get(this.urlPoint + this.urlInit + table_name)
     }
-    save_ostan(ostan?: any) {
-        return this.http.post(this.urlPoint+ this.urlInit+ 'ostan', ostan);
+    save(table_name, data?: any) {
+        return this.http.post(this.urlPoint + this.urlInit + table_name, data);
     }
-    update_ostan(ostan?: any) {
-        return this.http.put(this.urlPoint+ this.urlInit+ 'ostan', ostan);
+    update(table_name, data?: any) {
+        return this.http.put(this.urlPoint + this.urlInit + table_name, data);
     }
+    get_city_of_ostan(data) {
+        return this.http.get(this.urlPoint + this.urlInit + 'city_of_ostan/' + data)
+    }
+
 }

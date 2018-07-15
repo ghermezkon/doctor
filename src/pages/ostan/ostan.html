@@ -1,7 +1,7 @@
 <ion-header class="item-center">
     <ion-navbar color="redColor" text-center>
         <ion-title>
-            استان ها و شهرستان ها
+            استان های کشور
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -10,7 +10,7 @@
         <ion-grid>
             <ion-row justify-content-center>
                 <ion-col>
-                    <ion-list>
+                    <ion-list no-padding no-margin>
                         <ion-item>
                             <ion-label floating>
                                 <span>
@@ -20,7 +20,7 @@
                             </ion-label>
                             <ion-input formControlName="ostan_code" autocomplete="off" text-center></ion-input>
                         </ion-item>
-                        <ng-container *ngFor="let validation of validation_msg.ostan">
+                        <ng-container *ngFor="let validation of validation_msg.global">
                             <div class="error-msg" *ngIf="dataForm.get('ostan_code').hasError(validation.type) && 
                                     (dataForm.get('ostan_code').dirty || dataForm.get('ostan_code').touched)">{{validation.message}}</div>
                         </ng-container>
@@ -33,45 +33,38 @@
                             </ion-label>
                             <ion-input formControlName="ostan_name" autocomplete="off" text-center></ion-input>
                         </ion-item>
-                        <ng-container *ngFor="let validation of validation_msg.ostan">
+                        <ng-container *ngFor="let validation of validation_msg.global">
                             <div class="error-msg" *ngIf="dataForm.get('ostan_name').hasError(validation.type) && 
                                     (dataForm.get('ostan_name').dirty || dataForm.get('ostan_name').touched)">{{validation.message}}</div>
                         </ng-container>
-                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save_ostan(dataForm.value)">ذخیره</button>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save(dataForm.value)">ذخیره</button>
                     </ion-list>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-
                 </ion-col>
             </ion-row>
         </ion-grid>
     </form>
-    <ion-list inset>
-        <ion-item color="dark">
-            <ion-row text-center no-padding no-margin>
-                <ion-col col-2>
-                    <h2 ion-text>کد استان</h2>
-                </ion-col>
-                <ion-col>
-                    <h2 ion-text>نام استان</h2>
-                </ion-col>
-            </ion-row>
-        </ion-item>
-        <ion-item-sliding *ngFor="let t of data_list">
+    <ion-list inset no-padding no-margin>
+        <ion-list-header>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام استان"></ion-searchbar>
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let data of data_list | filterOstan: input_search; let idx = index;">
             <ion-item>
-                <ion-row text-center no-padding no-margin>
-                    <ion-col col-2>
-                        <h2 ion-text>{{t.ostan_code}}</h2>
-                    </ion-col>
-                    <ion-col>
-                        <h2 ion-text>{{t.ostan_name}}</h2>
-                    </ion-col>
-                </ion-row>
+                <ion-avatar item-left>
+                    <i class="fal fa-map-marker-alt fa-2x"></i>
+                </ion-avatar>
+                <h2>نام استان:
+                    <span ion-text color="dark">{{data?.ostan_name}}</span>
+                </h2>
+                <ion-note> کد استان:
+                    <span>{{data?.ostan_code}}</span>
+                </ion-note>
             </ion-item>
-            <ion-item-options side="right">
-                <button ion-button (click)="share(slidingItem)">Share</button>
+            <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
+                <h2 ion-text color="light" style="font-size:1.5rem;">
+                    <ion-icon name="md-create"></ion-icon>
+                    <br/>
+                    <span margin>ویرایش</span>
+                </h2>
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>

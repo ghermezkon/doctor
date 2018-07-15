@@ -10,20 +10,23 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { OstanPage } from '../pages/ostan/ostan';
 import { HttpClientModule } from '@angular/common/http';
+import { PipesModule } from '../util/pipes.module';
+import { CityPage } from '../pages/ostan/city/city';
+import { OstanPage } from '../pages/ostan/ostan';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,OstanPage,
+    HomePage,CityPage,OstanPage,
     TabsPage
   ],
   imports: [
+    PipesModule,
     BrowserModule,
-    HttpClientModule,
+    HttpClientModule, 
     IonicModule.forRoot(MyApp, {
       backButtonText: 'بازگشت',
       scrollPadding: false,
@@ -38,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,OstanPage,
+    HomePage,CityPage,OstanPage,
     TabsPage,
   ],
   providers: [
