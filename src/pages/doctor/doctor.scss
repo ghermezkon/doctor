@@ -1,0 +1,27 @@
+doctor-page{
+    ion-label.td{
+        width:20%;max-width:20%;
+    }
+    ion-select.td{
+        width:80% !important;min-width:80% !important;
+        text-align: right !important;
+        float: right !important;
+    }
+    .myFile {
+        position: relative;
+        overflow: hidden;
+        text-align:right;
+        clear: both;
+        cursor: pointer;
+      }
+      .myFile input[type="file"] {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        opacity: 0;
+        font-size: 100px;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+      }
+}

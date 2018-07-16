@@ -1,0 +1,11 @@
+type-doctor-page{
+    ion-label[floating]{
+        padding-right:0.05em;padding-top:0.05em;
+        & > span{
+            color: map-get($colors,dark);
+            & > span{
+                color: map-get($colors,dark);
+            }
+        }
+    }
+}

@@ -14,13 +14,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from '../util/pipes.module';
 import { CityPage } from '../pages/ostan/city/city';
 import { OstanPage } from '../pages/ostan/ostan';
+import { TypeDoctorPage } from '../pages/type.doctor/type.doctor';
+import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
+import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
+import { DoctorPage } from '../pages/doctor/doctor';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,
+    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,
     TabsPage
   ],
   imports: [
@@ -41,7 +45,7 @@ import { OstanPage } from '../pages/ostan/ostan';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,
+    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,
     TabsPage,
   ],
   providers: [

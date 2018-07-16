@@ -1,0 +1,84 @@
+<ion-header class="item-center">
+    <ion-navbar color="redColor" text-center>
+        <ion-title>
+            انواع پزشک
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <form novalidate [formGroup]="dataForm">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col>
+                    <ion-list no-padding no-margin>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-sort-numeric-up"></i>
+                                    <span> کد نوع پزشک</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="td_code" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.global">
+                            <div class="error-msg" *ngIf="dataForm.get('td_code').hasError(validation.type) && 
+                                    (dataForm.get('td_code').dirty || dataForm.get('td_code').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-file-alt"></i>
+                                    <span> عنوان نوع پزشک</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="td_name" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.global">
+                            <div class="error-msg" *ngIf="dataForm.get('td_name').hasError(validation.type) && 
+                                    (dataForm.get('td_name').dirty || dataForm.get('td_name').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-file-alt"></i>
+                                    <span> نام آیکون</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="td_icon" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save(dataForm.value)">ذخیره</button>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+    <ion-list inset no-padding no-margin>
+        <ion-list-header>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نوع پزشک"></ion-searchbar>
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let data of data_list | filterTypeDoctor: input_search; let idx = index;">
+            <ion-item>
+                <ion-avatar item-left>
+                    <i class="fal fa-user-md fa-2x"></i>
+                </ion-avatar>
+                <h2>عنوان نوع:
+                    <span ion-text color="dark">{{data?.td_name}}</span>
+                </h2>
+                <ion-note> کد نوع:
+                    <span>{{data?.td_code}}</span>
+                </ion-note>
+            </ion-item>
+            <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
+                <h2 ion-text color="light" style="font-size:1.5rem;">
+                    <ion-icon name="md-create"></ion-icon>
+                    <br/>
+                    <span margin>ویرایش</span>
+                </h2>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

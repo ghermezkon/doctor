@@ -2,16 +2,16 @@ import { Component } from "@angular/core";
 import { IonicPage } from "ionic-angular";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { HttpService } from "../../http/HttpService";
-import { take } from 'rxjs/operators';
 import { MessageUtil } from "../../util/message.util";
+import { take } from "rxjs/operators";
 import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
-    selector: 'ostan-page',
-    templateUrl: 'ostan.html'
+    selector: 'type-doctor-page',
+    templateUrl: 'type.doctor.html'
 })
-export class OstanPage {
+export class TypeDoctorPage {
     dataForm: FormGroup;
     data_list: any[] = [];
     counter_list: any[] = [];
@@ -23,13 +23,13 @@ export class OstanPage {
     validation_msg: any;
     input_search: any;
     idx: any = -1;
-    //------------------------------------------------------------
+    //-----------------------------------------------------------
     constructor(public fb: FormBuilder, public _http: HttpService, public _msg: MessageUtil) { }
-    //------------------------------------------------------------
+    //-----------------------------------------------------------
     ionViewWillLoad() {
         this.validation_msg = this._msg.validate_msg();
         this.createForm();
-        this._http.getAll('ostan').subscribe((_: any) => {
+        this._http.getAll('typedoctor').subscribe((_: any) => {
             if (_.length > 11) {
                 this.counter_list = _;
                 for (let i = 0; i < 11; i++) {
@@ -43,7 +43,7 @@ export class OstanPage {
             }
         });
     }
-    //------------------------------------------------------------
+    //-----------------------------------------------------------
     doInfinite(infiniteScroll) {
         this.totalPage = this.page * 10;
         setTimeout(() => {
@@ -61,8 +61,9 @@ export class OstanPage {
     createForm() {
         this.dataForm = this.fb.group({
             _id: [''],
-            ostan_code: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
-            ostan_name: ['', Validators.required],
+            td_code: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
+            td_name: ['', Validators.required],
+            td_icon: ['']
         });
     }
     //------------------------------------------------------------
@@ -73,11 +74,11 @@ export class OstanPage {
     }
     //------------------------------------------------------------
     save(data) {
-        if(this.idx != -1){
+        if (this.idx != -1) {
             this.edit(data);
         }
         let find_index = _.findIndex(this.data_list, function (o) {
-            return o.ostan_code == data.ostan_code || o.ostan_name == data.ostan_name;
+            return o.td_code == data.td_code || o.td_name == data.td_name;
         });
         if (find_index != -1) {
             this._msg.showMessage('double');
@@ -102,7 +103,7 @@ export class OstanPage {
     edit(data) {
         let list = [...this.data_list];
         let find_index = _.findIndex(this.data_list, (o: any) => {
-            return o.ostan_name == data.ostan_name || o.ostan_code == data.ostan_code;
+            return o.td_name == data.td_name || o.td_code == data.td_code;
         });
         if (find_index != -1 && find_index != this.idx) {
             this.dataForm.reset();

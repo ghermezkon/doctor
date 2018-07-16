@@ -23,14 +23,19 @@ export class HttpService {
     getAll(table_name) {
         return this.http.get(this.urlPoint + this.urlInit + table_name)
     }
-    save(table_name, data?: any) {
-        return this.http.post(this.urlPoint + this.urlInit + table_name, data);
+    save(data?: any) {
+        return this.http.post(this.urlPoint + this.urlInit, data);
     }
-    update(table_name, data?: any) {
-        return this.http.put(this.urlPoint + this.urlInit + table_name, data);
+    update(data?: any) {
+        return this.http.put(this.urlPoint + this.urlInit, data);
     }
     get_city_of_ostan(data) {
         return this.http.get(this.urlPoint + this.urlInit + 'city_of_ostan/' + data)
     }
-
+    get_tw_of_td(data) {
+        return this.http.get(this.urlPoint + this.urlInit + 'tw_of_td/' + data)
+    }
+    get_doctor_of_td(data) {
+        return this.http.get(this.urlPoint + this.urlInit + 'doctor_of_td/' + data)
+    }
 }

@@ -1,0 +1,143 @@
+<ion-header class="item-center">
+    <ion-navbar color="redColor" text-center>
+        <ion-title>
+            مشخصات پزشک
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <form novalidate [formGroup]="dataForm">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col>
+                    <ion-item>
+                        <ion-label class="td">نوع پزشک</ion-label>
+                        <ion-select class="td" placeholder="-- انواع پزشک قابل انتخاب --" (ionChange)="tdSelectChange($event)" okText="تائید" cancelText="لغو"
+                            [(ngModel)]="td_select" [compareWith]="compareFnTD" [selectOptions]="tdOption" [ngModelOptions]="{standalone: true}">
+                            <ion-option *ngFor="let o of td_list" [value]="o">{{o?.td_name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row justify-content-center>
+                <ion-col>
+                    <ion-item>
+                        <ion-label class="td">تخصص</ion-label>
+                        <ion-select class="td" placeholder="-- انواع تخصص قابل انتخاب --" okText="تائید" cancelText="لغو" [(ngModel)]="cd_select"
+                            [compareWith]="compareFnCD" [selectOptions]="cdOption" [ngModelOptions]="{standalone: true}">
+                            <ion-option *ngFor="let o of cd_list" [value]="o">{{o?.cd_name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-grid no-padding no-margin>
+                        <ion-row>
+                            <ion-col col-4>
+                                <ion-item>
+                                    <ion-label floating>
+                                        <span>
+                                            <i class="fal fa-sort-numeric-up"></i>
+                                            <span> کد پزشک</span>
+                                        </span>
+                                    </ion-label>
+                                    <ion-input formControlName="doctor_code" autocomplete="off" text-center></ion-input>
+                                </ion-item>
+                                <ng-container *ngFor="let validation of validation_msg.global">
+                                    <div class="error-msg" *ngIf="dataForm.get('doctor_code').hasError(validation.type) && 
+                                                (dataForm.get('doctor_code').dirty || dataForm.get('doctor_code').touched)">{{validation.message}}</div>
+                                </ng-container>
+                            </ion-col>
+                            <ion-col col-8>
+                                <ion-item>
+                                    <ion-label floating>
+                                        <span>
+                                            <i class="fal fa-file-alt"></i>
+                                            <span> نام پزشک</span>
+                                        </span>
+                                    </ion-label>
+                                    <ion-input formControlName="doctor_name" autocomplete="off" text-center></ion-input>
+                                </ion-item>
+                                <ng-container *ngFor="let validation of validation_msg.global">
+                                    <div class="error-msg" *ngIf="dataForm.get('doctor_name').hasError(validation.type) && 
+                                        (dataForm.get('doctor_name').dirty || dataForm.get('doctor_name').touched)">{{validation.message}}</div>
+                                </ng-container>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                    <ion-list no-padding no-margin>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-file-alt"></i>
+                                    <span> سایر عناوین پزشکی</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="doctor_sub_caption" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-mobile-alt"></i>
+                                    <span> شماره همراه</span>
+                                </span>
+                            </ion-label>
+                            <ion-input type="number" formControlName="doctor_mobile" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.mobile">
+                            <div class="error-msg" *ngIf="dataForm.get('doctor_mobile').hasError(validation.type) && 
+                                        (dataForm.get('doctor_mobile').dirty || dataForm.get('doctor_mobile').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <ion-item>
+                            <ion-label class="myFile" style="width:100%;color:gray;" *ngIf="dataForm.get('doctor_pic').value == '';else doctorImg">
+                                <i class="fal fa-id-card"></i>
+                                <span> تصویر پروفایل </span>
+                                <input id="fileImport" name="single" type="file" accept="image/*" (change)="readFile($event);" />
+                            </ion-label>
+                            <ng-template #doctorImg>
+                                <ion-avatar item-left style="position:absolute;">
+                                    <img [src]="dataForm.get('doctor_pic').value" style="width:100;height:auto;max-width:64px;padding-bottom:1em;">
+                                </ion-avatar>
+                                <ion-label class="myFile" style="width:100%;color:gray;right:8%;transform: translateX(-8%);">
+                                    <span> تغییر تصویر پروفایل </span>
+                                    <input id="fileImport" name="single" type="file" accept="image/*" (change)="readFile($event);" />
+                                </ion-label>
+                            </ng-template>
+                        </ion-item>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid || td_select == undefined || td_select == undefined" (click)="save(dataForm.value)">ذخیره</button>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+    <ion-list inset no-padding no-margin>
+        <ion-list-header>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام پزشک"></ion-searchbar>
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let data of data_list | filterDoctor: input_search; let idx = index;">
+            <ion-item>
+                <ion-avatar item-left>
+                    <img [src]="data?.doctor_pic" style="width:100;height:auto;max-width:64px;">
+                </ion-avatar>
+                <h2>نام پزشک:
+                    <span ion-text color="dark">{{data?.doctor_name}}</span>
+                </h2>
+                <ion-note> تخصص:
+                    <span>{{data?.cd.cd_name}} <span style="font-size:1.2rem">({{data?.doctor_sub_caption}})</span></span>
+                </ion-note>
+            </ion-item>
+            <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
+                <h2 ion-text color="light" style="font-size:1.5rem;">
+                    <ion-icon name="md-create"></ion-icon>
+                    <br/>
+                    <span margin>ویرایش</span>
+                </h2>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

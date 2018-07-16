@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { FilterOstan, FilterCity } from './filter.pipe';
+import { FilterOstan, FilterCity, FilterTypeDoctor, FilterTypeWork, FilterCaptionDoctor, FilterDoctor } from './filter.pipe';
 @NgModule({
-	declarations: [FilterOstan, FilterCity],
+	declarations: [FilterOstan, FilterCity, FilterTypeDoctor, FilterTypeWork, FilterCaptionDoctor, FilterDoctor],
 	imports: [],
-	exports: [FilterOstan, FilterCity]
+	exports: [FilterOstan, FilterCity, FilterTypeDoctor, FilterTypeWork, FilterCaptionDoctor, FilterDoctor]
 })
 export class PipesModule { }

@@ -1,18 +1,19 @@
 import { Component } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { MessageUtil } from "../../../util/message.util";
-import { HttpService } from "../../../http/HttpService";
-import { take, map } from "rxjs/operators";
-import { Ostan } from "../../../util/global.class";
 import { IonicPage } from "ionic-angular";
 import * as _ from 'lodash';
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { HttpService } from "../../http/HttpService";
+import { MessageUtil } from "../../util/message.util";
+import { map, take } from "rxjs/operators";
+import { TD, CD } from "../../util/global.class";
+import { forkJoin } from "rxjs";
 
 @IonicPage()
 @Component({
-    selector: 'city-page',
-    templateUrl: 'city.html'
+    selector: 'doctor-page',
+    templateUrl: 'doctor.html'
 })
-export class CityPage {
+export class DoctorPage {
     dataForm: FormGroup;
     data_list: any[] = [];
     counter_list: any[] = [];
@@ -23,27 +24,43 @@ export class CityPage {
 
     validation_msg: any;
     input_search: any;
-    ostan_list: any[] = [];
-    ostan_select: any = undefined;
-    ostanOption: any;
+
+    td_list: any[] = [];
+    td_select: any = undefined;
+    tdOption: any;
+
+    cd_list: any[] = [];
+    cd_select: any = undefined;
+    cdOption: any;
+
     idx: any = -1;
-    //-----------------------------------------------
+    //-------------------------------------------------------
     constructor(public fb: FormBuilder, public _http: HttpService, public _msg: MessageUtil) { }
-    //-----------------------------------------------
+    //-------------------------------------------------------
     ionViewWillLoad() {
         this.validation_msg = this._msg.validate_msg();
         this.createForm();
-        this.ostanOption = {
-            title: 'استان های کشور',
-            subTitle: 'انتخاب استان',
+        this.tdOption = {
+            title: 'نوع پزشک',
+            subTitle: 'انتخاب نوع پزشک',
             mode: 'ios'
         };
-        this._http.getAll('ostan').pipe(map(res => _.orderBy(res, ['ostan_code']))).subscribe((_: any) => {
-            this.ostan_list = _;
-        })
+        this.cdOption = {
+            title: 'تخصص',
+            subTitle: 'انتخاب نوع تخصص',
+            mode: 'ios'
+        };
+        forkJoin(
+            this._http.getAll('typedoctor').pipe(map(res => _.orderBy(res, ['td_code']))),
+            this._http.getAll('captiondoctor').pipe(map(res => _.orderBy(res, ['cd_code']))))
+            .subscribe((_: any) => {
+                this.td_list = _[0];
+                this.cd_list = _[1];
+            })
     }
-    ostanSelectChange(event) {
-        this._http.get_city_of_ostan(event.ostan_name).pipe(take(1)).subscribe((res: any) => {
+    //-------------------------------------------------------
+    tdSelectChange(event) {
+        this._http.get_doctor_of_td(event.td_name).pipe(take(1)).subscribe((res: any) => {
             if (res.length > 11) {
                 this.counter_list = res;
                 for (let i = 0; i < 11; i++) {
@@ -72,32 +89,57 @@ export class CityPage {
         }, 500);
     }
     //-----------------------------------------------    
-    compareFnOstan(e1: any, e2: any): boolean {
+    compareFnTD(e1: any, e2: any): boolean {
+        return e1 && e2 ? e1._id === e2._id : e1 === e2;
+    }
+    compareFnCD(e1: any, e2: any): boolean {
         return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
     //------------------------------------------------------------
     createForm() {
         this.dataForm = this.fb.group({
             _id: [''],
-            city_code: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
-            city_name: ['', Validators.required],
-            ostan: this.fb.group({ ...Ostan }),
+            doctor_code: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
+            doctor_name: ['', Validators.required],
+            doctor_pic: [''],
+            doctor_sub_caption: [''],
+            doctor_mobile: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(11), Validators.maxLength(11)])],
+            td: this.fb.group({ ...TD }),
+            cd: this.fb.group({ ...CD }),
         });
     }
+    //------------------------------------------------------------
     set_data(data, idx) {
         this.dataForm.patchValue(data);
-        this.ostan_select = data.ostan;
+        this.td_select = data.td;
+        this.cd_select = data.cd;
+        //this.dataForm.get('doctor_pic').setValue(data.doctor_pic);
         this.idx = idx;
         return true;
     }
+    //------------------------------------------------------------
+    readFile(input) {
+        var reader = new FileReader();
+        var self = this;
+        reader.onload = function (e) {
+            self.dataForm.controls['doctor_pic'].setValue(reader.result);
+        };
+        var file = (<HTMLInputElement>document.getElementById('fileImport')).files[0];
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+    //------------------------------------------------------------
     save(data) {
-        if(this.idx != -1){
+        if (this.idx != -1) {
             this.edit(data);
         }
-        data.ostan = this.ostan_select;
+        data.td = this.td_select;
+        data.cd = this.cd_select;
+
         let find_index = _.findIndex(this.data_list, function (o) {
-            return (o.ostan.ostan_name == data.ostan.ostan_name && o.city_code == data.city_code) ||
-                (o.ostan.ostan_name == data.ostan.ostan_name && o.city_name == data.city_name);
+            return (o.td.td_name == data.td.td_name && o.doctor_code == data.doctor_code) ||
+                (o.td.td_name == data.td.td_name && o.doctor_name == data.doctor_name);
         });
         if (find_index != -1) {
             this._msg.showMessage('double');
@@ -116,15 +158,19 @@ export class CityPage {
         } else {
             this._msg.showMessage('error');
         }
-        this.dataForm.reset();
+        this.dataForm.reset({
+            doctor_pic: ''
+        });  
     }
     //------------------------------------------------------------
     edit(data) {
         let list = [...this.data_list];
-        data.ostan = this.ostan_select;
+        data.td = this.td_select;
+        data.cd = this.cd_select;
+
         let find_index = _.findIndex(this.data_list, function (o) {
-            return (o.ostan.ostan_name == data.ostan.ostan_name && o.city_code == data.city_code) ||
-                (o.ostan.ostan_name == data.ostan.ostan_name && o.city_name == data.city_name);
+            return (o.td.td_name == data.td.td_name && o.doctor_code == data.doctor_code) ||
+                (o.td.td_name == data.td.td_name && o.doctor_name == data.doctor_name);
         });
         if (find_index != -1 && find_index != this.idx) {
             this.dataForm.reset();
@@ -143,7 +189,9 @@ export class CityPage {
                 }
             });
         }
-        this.dataForm.reset();
+        this.dataForm.reset({
+            doctor_pic: ''
+        });        
         this.idx = -1;
     }
 }

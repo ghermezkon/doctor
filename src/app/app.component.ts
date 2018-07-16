@@ -7,12 +7,16 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ViewChild } from '@angular/core';
 import { CityPage } from '../pages/ostan/city/city';
 import { OstanPage } from '../pages/ostan/ostan';
+import { TypeDoctorPage } from '../pages/type.doctor/type.doctor';
+import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
+import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
+import { DoctorPage } from '../pages/doctor/doctor';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = OstanPage;
+  rootPage:any = DoctorPage;
   @ViewChild(Nav) nav: Nav;
   //---------------------------------------------------------------------------------
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

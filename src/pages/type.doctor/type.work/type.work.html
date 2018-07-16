@@ -1,0 +1,84 @@
+<ion-header class="item-center">
+    <ion-navbar color="redColor" text-center>
+        <ion-title>
+            مشخصات انواع ویزیت
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <form novalidate [formGroup]="dataForm">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col>
+                    <ion-item>
+                        <ion-label class="td">نوع پزشک</ion-label>
+                        <ion-select class="td" placeholder="-- انواع پزشک های قابل انتخاب --" (ionChange)="tdSelectChange($event)" okText="تائید"
+                            cancelText="لغو" [(ngModel)]="td_select" [compareWith]="compareFnTD" [selectOptions]="tdOption"
+                            [ngModelOptions]="{standalone: true}">
+                            <ion-option *ngFor="let o of td_list" [value]="o">{{o.td_name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <ion-list no-padding no-margin>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-sort-numeric-up"></i>
+                                    <span> کد نوع ویزیت</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="tw_code" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.global">
+                            <div class="error-msg" *ngIf="dataForm.get('tw_code').hasError(validation.type) && 
+                                (dataForm.get('tw_code').dirty || dataForm.get('tw_code').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-file-alt"></i>
+                                    <span> عنوان نوع ویزیت</span>
+                                </span>
+                            </ion-label>
+                            <ion-input formControlName="tw_name" autocomplete="off" text-center></ion-input>
+                        </ion-item>
+                        <ng-container *ngFor="let validation of validation_msg.global">
+                            <div class="error-msg" *ngIf="dataForm.get('tw_name').hasError(validation.type) && 
+                                (dataForm.get('tw_name').dirty || dataForm.get('tw_name').touched)">{{validation.message}}</div>
+                        </ng-container>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid || td_select == undefined" (click)="save(dataForm.value)">ذخیره</button>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+    <ion-list inset no-padding no-margin>
+        <ion-list-header>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="عنوان نوع ویزیت"></ion-searchbar>
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let data of data_list | filterTypeWork: input_search; let idx = index;">
+            <ion-item>
+                <ion-avatar item-left>
+                    <i class="fal fa-procedures fa-2x"></i>                                        
+                </ion-avatar>
+                <h2>عنوان نوع ویزیت:
+                    <span ion-text color="dark">{{data?.tw_name}}</span>
+                </h2>
+                <ion-note> کد نوع ویزیت:
+                    <span>{{data?.tw_code}}</span>
+                </ion-note>
+            </ion-item>
+            <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
+                <h2 ion-text color="light" style="font-size:1.5rem;">
+                    <ion-icon name="md-create"></ion-icon><br/><span margin>ویرایش</span>
+                </h2>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
