@@ -18,13 +18,14 @@ import { TypeDoctorPage } from '../pages/type.doctor/type.doctor';
 import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
 import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
 import { DoctorPage } from '../pages/doctor/doctor';
+import { MatabPage } from '../pages/matab/matab';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,
+    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,MatabPage,
     TabsPage
   ],
   imports: [
@@ -45,7 +46,7 @@ import { DoctorPage } from '../pages/doctor/doctor';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,
+    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,MatabPage,
     TabsPage,
   ],
   providers: [

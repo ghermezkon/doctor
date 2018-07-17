@@ -38,4 +38,7 @@ export class HttpService {
     get_doctor_of_td(data) {
         return this.http.get(this.urlPoint + this.urlInit + 'doctor_of_td/' + data)
     }
+    get_doctor_by_name(data){
+        return this.http.get(this.urlPoint + this.urlInit + 'search_doctor/' + data)
+    }
 }

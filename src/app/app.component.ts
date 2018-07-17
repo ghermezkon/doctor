@@ -11,12 +11,13 @@ import { TypeDoctorPage } from '../pages/type.doctor/type.doctor';
 import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
 import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
 import { DoctorPage } from '../pages/doctor/doctor';
+import { MatabPage } from '../pages/matab/matab';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = DoctorPage;
+  rootPage:any = MatabPage;
   @ViewChild(Nav) nav: Nav;
   //---------------------------------------------------------------------------------
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {

@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
 import { IonicPage } from "ionic-angular";
-import * as _ from 'lodash';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { HttpService } from "../../http/HttpService";
 import { MessageUtil } from "../../util/message.util";
 import { map, take } from "rxjs/operators";
 import { TD, CD } from "../../util/global.class";
 import { forkJoin } from "rxjs";
+import * as _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -113,7 +113,6 @@ export class DoctorPage {
         this.dataForm.patchValue(data);
         this.td_select = data.td;
         this.cd_select = data.cd;
-        //this.dataForm.get('doctor_pic').setValue(data.doctor_pic);
         this.idx = idx;
         return true;
     }
