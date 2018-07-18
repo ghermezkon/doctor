@@ -26,7 +26,7 @@ export class MessageUtil {
                 { type: 'pattern', message: 'فقط عدد وارد نمائید' },
                 { type: 'minlength', message: 'حداقل 11 کاراکتر وارد نمائید' },
                 { type: 'maxlength', message: 'حداکثر 11 کاراکتر وارد نمائید' },
-            ]
+            ],
         }
     }
     //----------------------------------------------

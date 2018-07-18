@@ -6,24 +6,106 @@
     </ion-navbar>
 </ion-header>
 <ion-content>
-    <form novalidate>
+    <form novalidate [formGroup]="dataForm">
         <ion-grid>
             <ion-row justify-content-center>
-                <ion-col id="t1">
-                    <ion-item class="filter-wrapper">
-                        <ion-input [formControl]="queryField" (keyup)="search_doctor($event)" type="text" placeholder="search for artists..."
-                            ></ion-input>
-                        <!-- <ion-label class="ostan">پزشک</ion-label>
-                        <ion-input [ngModelOptions]="{standalone: true}" [(ngModel)]="doctor_name" (keyup)="search_doctor($event)" autocomplete="off" text-center></ion-input> -->
+                <ion-col>
+                    <ion-item>
+                        <ion-label style="width:30%;max-width:30%;">
+                            <i class="fal fa-user-md"></i>
+                            پزشک
+                        </ion-label>
+                        <select-searchable item-content formControlName="matab_doctor" [items]="doctor_list" closeButtonText="Close" itemValueField="doctor_code"
+                            itemTextField="doctor_name" [canSearch]="true" [hasInfiniteScroll]="true" (onSearch)="searchDoctorsInfinite($event)"
+                            (onInfiniteScroll)="getMoreDoctors($event)" [isEnabled]="true">
+                            <ng-template selectSearchableItemTemplate let-doctor="item">
+                                {{doctor.doctor_name}}
+                                <span style="font-size:1.2rem;color:gray;">({{doctor.cd.cd_name}})</span>
+                            </ng-template>
+                            <ng-template selectSearchableItemRightTemplate let-doctor="item">
+                                <img [src]="doctor.doctor_pic" style="width:100%;height:auto;max-width:48px;" />
+                            </ng-template>
+                        </select-searchable>
                     </ion-item>
-                    <ion-list #test1>
-                        <ion-item (click)="test(d)" *ngFor="let d of doctor_list;let i=index;" class="filter-select-list">
-                            <p>{{d.doctor_name}}</p>
-                        </ion-item>
-                    </ion-list>
-
+                    <ion-item>
+                        <ion-label style="width:30%;max-width:30%;">
+                            <i class="fal fa-level-down-alt"></i>
+                            نام شهر
+                        </ion-label>
+                        <select-searchable item-content formControlName="matab_city" [items]="city_list" closeButtonText="Close" itemValueField="city_code"
+                            itemTextField="city_name" [canSearch]="true" [hasInfiniteScroll]="true" (onSearch)="searchCitysInfinite($event)"
+                            (onInfiniteScroll)="getMoreCitys($event)" [isEnabled]="true">
+                            <ng-template selectSearchableItemTemplate let-city="item">
+                                {{city.city_name}}
+                                <span style="font-size:1.2rem;color:gray;">({{city.ostan.ostan_name}})</span>
+                            </ng-template>
+                        </select-searchable>
+                    </ion-item>
                 </ion-col>
             </ion-row>
+            <ion-row no-padding no-margin>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> تلفن</span>
+                            </span>
+                        </ion-label>
+                        <ion-input formControlName="matab_tel" autocomplete="off" text-center type="number"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validation_msg.mobile">
+                        <div class="error-msg" *ngIf="dataForm.get('matab_tel').hasError(validation.type) && 
+                            (dataForm.get('matab_tel').dirty || dataForm.get('matab_tel').touched)">{{validation.message}}</div>
+                    </ng-container>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-fax"></i>
+                                <span> دورنگار</span>
+                            </span>
+                        </ion-label>
+                        <ion-input formControlName="matab_fax" autocomplete="off" text-center type="number"></ion-input>
+                    </ion-item>
+                    <ng-container *ngFor="let validation of validation_msg.mobile">
+                        <div class="error-msg" *ngIf="dataForm.get('matab_fax').hasError(validation.type) && 
+                            (dataForm.get('matab_fax').dirty || dataForm.get('matab_fax').touched)">{{validation.message}}</div>
+                    </ng-container>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-file-alt"></i>
+                                <span> آدرس</span>
+                            </span>
+                        </ion-label>
+                        <ion-textarea formControlName="matab_address"></ion-textarea>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item no-lines>
+                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save(dataForm.value)">ذخیره</button>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <!-- <ion-row justify-content-center>
+                <ion-col>
+                    <ion-item>
+                        <ion-label floating>نام شهر</ion-label>
+                        <ion-input [formControl]="city_input" autocomplete="off" text-right (keyup)="search_city($event)" type="text"></ion-input>
+                    </ion-item>
+                    <ion-list #cityOfList>
+                        <ion-item (click)="select_city(c)" *ngFor="let c of city_list;let i=index;">
+                            <p>{{c.city_name}}</p>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row> -->
             <!-- <ion-row>
                 <ion-col>
                     <ion-list no-padding no-margin>

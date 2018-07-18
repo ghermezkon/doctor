@@ -19,6 +19,7 @@ import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
 import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
 import { DoctorPage } from '../pages/doctor/doctor';
 import { MatabPage } from '../pages/matab/matab';
+import { SelectSearchableModule } from 'ionic-select-searchable';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MatabPage } from '../pages/matab/matab';
     TabsPage
   ],
   imports: [
-    PipesModule,
+    PipesModule,SelectSearchableModule,
     BrowserModule,
     HttpClientModule, 
     IonicModule.forRoot(MyApp, {
