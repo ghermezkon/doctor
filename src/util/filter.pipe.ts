@@ -82,3 +82,16 @@ export class FilterDoctor implements PipeTransform {
     }
 }
 //--------------------------------------------------------
+@Pipe({
+    name: 'filterMatab',
+})
+export class FilterMatab implements PipeTransform {
+    transform(value: any, input?: string) {
+        if (input) {
+            return value.filter((el: any) => {
+                return el.matab_base.matab_doctor.doctor_name.indexOf(input) > -1;
+            })
+        }
+        return value;
+    }
+}

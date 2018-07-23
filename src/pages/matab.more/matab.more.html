@@ -1,0 +1,134 @@
+<ion-header class="item-center">
+    <ion-navbar color="redColor" text-center>
+        <ion-title>
+            اطلاعات تکمیلی مطب
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-grid>
+        <ion-row justify-content-center>
+            <ion-col>
+                <ion-item>
+                    <ion-label style="width:15%;max-width:15%;">
+                        <i class="fal fa-user-md"></i>
+                        مطب
+                    </ion-label>
+                    <select-searchable item-content [(ngModel)]="current_matab" [items]="matab_list" closeButtonText="Close" [canSearch]="true"
+                        [hasInfiniteScroll]="true" (onSearch)="searchMatabsInfinite($event)" (onInfiniteScroll)="getMoreMatabs($event)"
+                        [isEnabled]="true">
+                        <ng-template selectSearchableValueTemplate let-matab="value">
+                            {{matab.matab_base.matab_doctor.doctor_name}}
+                            <span style="font-size:1.2rem;color:gray;">({{matab.matab_base.matab_doctor.cd.cd_name}}) - </span>
+                            <span>{{matab.matab_base.matab_city.city_name}}</span>
+                        </ng-template>
+                        <ng-template selectSearchableItemTemplate let-matab="item">
+                            {{matab.matab_base.matab_doctor.doctor_name}}
+                            <span style="font-size:1.2rem;color:gray;">({{matab.matab_base.matab_doctor.cd.cd_name}}) - </span>
+                            <span>{{matab.matab_base.matab_city.city_name}}</span>
+                        </ng-template>
+                        <ng-template selectSearchableItemRightTemplate let-matab="item">
+                            <img [src]="matab.matab_base.matab_doctor.doctor_pic" style="width:100%;height:auto;max-width:48px;" />
+                        </ng-template>
+                    </select-searchable>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <form novalidate [formGroup]="dataForm">
+            <ion-row>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> ساعت شروع فعالیت</span>
+                            </span>
+                        </ion-label>
+                        <ion-datetime displayFormat="HH:mm A" pickerFormat="HH:mm" formControlName="matab_start_time"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> ساعت خاتمه فعالیت</span>
+                            </span>
+                        </ion-label>
+                        <ion-datetime displayFormat="HH:mm A" pickerFormat="HH:mm" formControlName="matab_end_time"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label>روزهای تعطیلی</ion-label>
+                        <ion-select formControlName="matab_close_day" multiple="true" cancelText="لغو" okText="انتخاب">
+                            <ion-option *ngFor="let d of days">{{d.day_name}}</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> تعداد تختها</span>
+                            </span>
+                        </ion-label>
+                        <ion-input formControlName="matab_number_bed" autocomplete="off" text-center type="number"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> بستن مطب در تاریخ</span>
+                            </span>
+                        </ion-label>
+                        <ion-datetime min="1397" max="1450" displayFormat="YYYY/MM/DD" doneText="تائید" cancelText="بستن" pickerFormat="YYYY/MMMM/DD" formControlName="matab_date_close_start"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item>
+                        <ion-label floating>
+                            <span>
+                                <i class="fal fa-phone-volume"></i>
+                                <span> بستن مطب تا تاریخ</span>
+                            </span>
+                        </ion-label>
+                        <ion-datetime min="1397" max="1450" displayFormat="YYYY/MM/DD" doneText="تائید" cancelText="بستن" pickerFormat="YYYY/MMMM/DD"
+                            formControlName="matab_date_close_end"></ion-datetime>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </form>
+    </ion-grid>
+    <!-- <ion-list inset no-padding no-margin>
+        <ion-list-header>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام پزشک"></ion-searchbar>
+        </ion-list-header>
+        <ion-item-sliding *ngFor="let data of data_list | filterMatab: input_search; let idx = index;">
+            <ion-item>
+                <ion-avatar item-left>
+                    <i class="fal fa-user-md fa-2x"></i>
+                </ion-avatar>
+                <h2>نام پزشک:
+                    <span ion-text color="dark">{{data?.matab_base.matab_doctor.doctor_name}}</span>
+                </h2>
+                <ion-note> شهر:
+                    <span>{{data?.matab_base.matab_city.city_name}}</span>
+                </ion-note>
+            </ion-item>
+            <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
+                <h2 ion-text color="light" style="font-size:1.5rem;">
+                    <ion-icon name="md-create"></ion-icon>
+                    <br/>
+                    <span margin>ویرایش</span>
+                </h2>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
+    </ion-infinite-scroll> -->
+</ion-content>

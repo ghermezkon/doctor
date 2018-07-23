@@ -20,25 +20,27 @@ import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
 import { DoctorPage } from '../pages/doctor/doctor';
 import { MatabPage } from '../pages/matab/matab';
 import { SelectSearchableModule } from 'ionic-select-searchable';
+import { MatabMorePage } from '../pages/matab.more/matab.more';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,MatabPage,
+    HomePage, CityPage, OstanPage, TypeDoctorPage, TypeWorkPage, CaptionDoctorPage, DoctorPage, MatabPage, MatabMorePage,
     TabsPage
   ],
   imports: [
-    PipesModule,SelectSearchableModule,
+    PipesModule, SelectSearchableModule,
     BrowserModule,
-    HttpClientModule, 
+    HttpClientModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: 'بازگشت',
       scrollPadding: false,
       scrollAssist: true,
       autoFocusAssist: false,
       monthNames: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+      dayNames: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه شنبه', 'چهارشنبه', 'پنجشنبه', 'جمعه'],
       animate: false,
     })
   ],
@@ -47,13 +49,13 @@ import { SelectSearchableModule } from 'ionic-select-searchable';
     MyApp,
     AboutPage,
     ContactPage,
-    HomePage,CityPage,OstanPage,TypeDoctorPage,TypeWorkPage,CaptionDoctorPage,DoctorPage,MatabPage,
+    HomePage, CityPage, OstanPage, TypeDoctorPage, TypeWorkPage, CaptionDoctorPage, DoctorPage, MatabPage, MatabMorePage,
     TabsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
-export class AppModule {}
+export class AppModule { }

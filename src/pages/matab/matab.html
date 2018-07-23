@@ -7,7 +7,7 @@
 </ion-header>
 <ion-content>
     <form novalidate [formGroup]="dataForm">
-        <ion-grid>
+        <ion-grid formGroupName="matab_base">
             <ion-row justify-content-center>
                 <ion-col>
                     <ion-item>
@@ -55,8 +55,8 @@
                         <ion-input formControlName="matab_tel" autocomplete="off" text-center type="number"></ion-input>
                     </ion-item>
                     <ng-container *ngFor="let validation of validation_msg.mobile">
-                        <div class="error-msg" *ngIf="dataForm.get('matab_tel').hasError(validation.type) && 
-                            (dataForm.get('matab_tel').dirty || dataForm.get('matab_tel').touched)">{{validation.message}}</div>
+                        <div class="error-msg" *ngIf="dataForm.get('matab_base').get('matab_tel').hasError(validation.type) && 
+                            (dataForm.get('matab_base').get('matab_tel').dirty || dataForm.get('matab_base').get('matab_tel').touched)">{{validation.message}}</div>
                     </ng-container>
                 </ion-col>
                 <ion-col col-6>
@@ -70,8 +70,8 @@
                         <ion-input formControlName="matab_fax" autocomplete="off" text-center type="number"></ion-input>
                     </ion-item>
                     <ng-container *ngFor="let validation of validation_msg.mobile">
-                        <div class="error-msg" *ngIf="dataForm.get('matab_fax').hasError(validation.type) && 
-                            (dataForm.get('matab_fax').dirty || dataForm.get('matab_fax').touched)">{{validation.message}}</div>
+                        <div class="error-msg" *ngIf="dataForm.get('matab_base').get('matab_fax').hasError(validation.type) && 
+                            (dataForm.get('matab_base').get('matab_fax').dirty || dataForm.get('matab_base').get('matab_fax').touched)">{{validation.message}}</div>
                     </ng-container>
                 </ion-col>
                 <ion-col col-12>
@@ -89,73 +89,27 @@
             <ion-row>
                 <ion-col col-12>
                     <ion-item no-lines>
-                        <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="save(dataForm.value)">ذخیره</button>
+                        <button ion-button block color="dark" [disabled]="dataForm.get('matab_base').invalid"
+                            (click)="save(dataForm.value)">ذخیره</button>
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <!-- <ion-row justify-content-center>
-                <ion-col>
-                    <ion-item>
-                        <ion-label floating>نام شهر</ion-label>
-                        <ion-input [formControl]="city_input" autocomplete="off" text-right (keyup)="search_city($event)" type="text"></ion-input>
-                    </ion-item>
-                    <ion-list #cityOfList>
-                        <ion-item (click)="select_city(c)" *ngFor="let c of city_list;let i=index;">
-                            <p>{{c.city_name}}</p>
-                        </ion-item>
-                    </ion-list>
-                </ion-col>
-            </ion-row> -->
-            <!-- <ion-row>
-                <ion-col>
-                    <ion-list no-padding no-margin>
-                        <ion-item>
-                            <ion-label floating>
-                                <span>
-                                    <i class="fal fa-sort-numeric-up"></i>
-                                    <span> پیش شماره شهر</span>
-                                </span>
-                            </ion-label>
-                            <ion-input formControlName="city_code" autocomplete="off" text-center></ion-input>
-                        </ion-item>
-                        <ng-container *ngFor="let validation of validation_msg.global">
-                            <div class="error-msg" *ngIf="dataForm.get('city_code').hasError(validation.type) && 
-                                (dataForm.get('city_code').dirty || dataForm.get('city_code').touched)">{{validation.message}}</div>
-                        </ng-container>
-                        <ion-item>
-                            <ion-label floating>
-                                <span>
-                                    <i class="fal fa-file-alt"></i>
-                                    <span> نام شهر</span>
-                                </span>
-                            </ion-label>
-                            <ion-input formControlName="city_name" autocomplete="off" text-center></ion-input>
-                        </ion-item>
-                        <ng-container *ngFor="let validation of validation_msg.global">
-                            <div class="error-msg" *ngIf="dataForm.get('city_name').hasError(validation.type) && 
-                                (dataForm.get('city_name').dirty || dataForm.get('city_name').touched)">{{validation.message}}</div>
-                        </ng-container>
-                        <button ion-button block color="dark" [disabled]="dataForm.invalid || ostan_select == undefined" (click)="save(dataForm.value)">ذخیره</button>
-                    </ion-list>
-                </ion-col>
-            </ion-row> -->
         </ion-grid>
     </form>
-    <!-- <ion-list inset no-padding no-margin>
+    <ion-list inset no-padding no-margin>
         <ion-list-header>
-            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام شهر"></ion-searchbar>
+            <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام پزشک"></ion-searchbar>
         </ion-list-header>
-        <ion-item-sliding *ngFor="let data of data_list | filterCity: input_search; let idx = index;">
+        <ion-item-sliding *ngFor="let data of data_list | filterMatab: input_search; let idx = index;">
             <ion-item>
                 <ion-avatar item-left>
-                    <ion-icon name="md-pin" style="font-size:3.2rem;"></ion-icon>
-
+                    <i class="fal fa-user-md fa-2x"></i>
                 </ion-avatar>
-                <h2>نام شهر:
-                    <span ion-text color="dark">{{data?.city_name}}</span>
+                <h2>نام پزشک:
+                    <span ion-text color="dark">{{data?.matab_base.matab_doctor.doctor_name}}</span>
                 </h2>
-                <ion-note> کد شهر:
-                    <span>{{data?.city_code}}</span>
+                <ion-note> شهر:
+                    <span>{{data?.matab_base.matab_city.city_name}}</span>
                 </ion-note>
             </ion-item>
             <ion-item-options side="right" (ionSwipe)="set_data(data, idx)" text-center>
@@ -169,5 +123,5 @@
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
-    </ion-infinite-scroll> -->
+    </ion-infinite-scroll>
 </ion-content>
