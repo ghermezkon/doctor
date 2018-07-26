@@ -16,7 +16,8 @@
                             پزشک
                         </ion-label>
                         <select-searchable item-content formControlName="matab_doctor" [items]="doctor_list" closeButtonText="Close" itemValueField="doctor_code"
-                            itemTextField="doctor_name" [canSearch]="true" [hasInfiniteScroll]="true" (onSearch)="searchDoctorsInfinite($event)"
+                            itemTextField="doctor_name" [canSearch]="true" [hasInfiniteScroll]="true" 
+                            (onSearch)="searchDoctorsInfinite($event)"
                             (onInfiniteScroll)="getMoreDoctors($event)" [isEnabled]="true">
                             <ng-template selectSearchableItemTemplate let-doctor="item">
                                 {{doctor.doctor_name}}

@@ -1,6 +1,10 @@
 matab-more-page{
-    select-searchable{
-        width:83% !important;
-        min-width: 83% !important;
+    ion-label.day{
+        width:40%;max-width:40%;
+    }
+    ion-select.day{
+        width:60% !important;min-width:60% !important;
+        text-align: right !important;
+        float: right !important;
     }
 }

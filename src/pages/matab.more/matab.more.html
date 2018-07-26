@@ -10,27 +10,11 @@
         <ion-row justify-content-center>
             <ion-col>
                 <ion-item>
-                    <ion-label style="width:15%;max-width:15%;">
+                    <ion-label style="color:gray;">
                         <i class="fal fa-user-md"></i>
-                        مطب
+                        مطب:
+                        <span style="color:#000;">{{matab_name}}</span>
                     </ion-label>
-                    <select-searchable item-content [(ngModel)]="current_matab" [items]="matab_list" closeButtonText="Close" [canSearch]="true"
-                        [hasInfiniteScroll]="true" (onSearch)="searchMatabsInfinite($event)" (onInfiniteScroll)="getMoreMatabs($event)"
-                        [isEnabled]="true">
-                        <ng-template selectSearchableValueTemplate let-matab="value">
-                            {{matab.matab_base.matab_doctor.doctor_name}}
-                            <span style="font-size:1.2rem;color:gray;">({{matab.matab_base.matab_doctor.cd.cd_name}}) - </span>
-                            <span>{{matab.matab_base.matab_city.city_name}}</span>
-                        </ng-template>
-                        <ng-template selectSearchableItemTemplate let-matab="item">
-                            {{matab.matab_base.matab_doctor.doctor_name}}
-                            <span style="font-size:1.2rem;color:gray;">({{matab.matab_base.matab_doctor.cd.cd_name}}) - </span>
-                            <span>{{matab.matab_base.matab_city.city_name}}</span>
-                        </ng-template>
-                        <ng-template selectSearchableItemRightTemplate let-matab="item">
-                            <img [src]="matab.matab_base.matab_doctor.doctor_pic" style="width:100%;height:auto;max-width:48px;" />
-                        </ng-template>
-                    </select-searchable>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -40,29 +24,40 @@
                     <ion-item>
                         <ion-label floating>
                             <span>
-                                <i class="fal fa-phone-volume"></i>
+                                <i class="fal fa-clock"></i>
                                 <span> ساعت شروع فعالیت</span>
                             </span>
                         </ion-label>
-                        <ion-datetime displayFormat="HH:mm A" pickerFormat="HH:mm" formControlName="matab_start_time"></ion-datetime>
+                        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" formControlName="matab_start_time" doneText="تائید" cancelText="بستن"></ion-datetime>
                     </ion-item>
+                    <ng-container *ngFor="let validation of validation_msg.global">
+                        <div class="error-msg" *ngIf="dataForm.get('matab_start_time').hasError(validation.type) && 
+                            (dataForm.get('matab_start_time').dirty || dataForm.get('matab_start_time').touched)">{{validation.message}}</div>
+                    </ng-container>
                 </ion-col>
                 <ion-col col-6>
                     <ion-item>
                         <ion-label floating>
                             <span>
-                                <i class="fal fa-phone-volume"></i>
+                                <i class="fal fa-clock"></i>
                                 <span> ساعت خاتمه فعالیت</span>
                             </span>
                         </ion-label>
-                        <ion-datetime displayFormat="HH:mm A" pickerFormat="HH:mm" formControlName="matab_end_time"></ion-datetime>
+                        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" formControlName="matab_end_time" doneText="تائید" cancelText="بستن"></ion-datetime>
                     </ion-item>
+                    <ng-container *ngFor="let validation of validation_msg.global">
+                        <div class="error-msg" *ngIf="dataForm.get('matab_end_time').hasError(validation.type) && 
+                            (dataForm.get('matab_end_time').dirty || dataForm.get('matab_end_time').touched)">{{validation.message}}</div>
+                    </ng-container>
                 </ion-col>
                 <ion-col col-12>
                     <ion-item>
-                        <ion-label>روزهای تعطیلی</ion-label>
-                        <ion-select formControlName="matab_close_day" multiple="true" cancelText="لغو" okText="انتخاب">
-                            <ion-option *ngFor="let d of days">{{d.day_name}}</ion-option>
+                        <ion-label class="day">
+                            <i class="fal fa-calendar-alt"></i>
+                            روزهای تعطیلی</ion-label>
+                        <ion-select class="day" formControlName="matab_close_day" [selectOptions]="dayOptions" [compareWith]="compareFn" multiple="true"
+                            cancelText="لغو" okText="انتخاب">
+                            <ion-option *ngFor="let d of days" [value]="d">{{d.day_name}}</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
@@ -70,29 +65,34 @@
                     <ion-item>
                         <ion-label floating>
                             <span>
-                                <i class="fal fa-phone-volume"></i>
+                                <i class="fal fa-sort-numeric-up"></i>
                                 <span> تعداد تختها</span>
                             </span>
                         </ion-label>
                         <ion-input formControlName="matab_number_bed" autocomplete="off" text-center type="number"></ion-input>
                     </ion-item>
+                    <ng-container *ngFor="let validation of validation_msg.global">
+                        <div class="error-msg" *ngIf="dataForm.get('matab_number_bed').hasError(validation.type) && 
+                            (dataForm.get('matab_number_bed').dirty || dataForm.get('matab_number_bed').touched)">{{validation.message}}</div>
+                    </ng-container>
                 </ion-col>
                 <ion-col col-6>
                     <ion-item>
                         <ion-label floating>
                             <span>
-                                <i class="fal fa-phone-volume"></i>
+                                <i class="fal fa-calendar-times"></i>
                                 <span> بستن مطب در تاریخ</span>
                             </span>
                         </ion-label>
-                        <ion-datetime min="1397" max="1450" displayFormat="YYYY/MM/DD" doneText="تائید" cancelText="بستن" pickerFormat="YYYY/MMMM/DD" formControlName="matab_date_close_start"></ion-datetime>
+                        <ion-datetime min="1397" max="1450" displayFormat="YYYY/MM/DD" doneText="تائید" cancelText="بستن" pickerFormat="YYYY/MMMM/DD"
+                            formControlName="matab_date_close_start"></ion-datetime>
                     </ion-item>
                 </ion-col>
                 <ion-col col-6>
                     <ion-item>
                         <ion-label floating>
                             <span>
-                                <i class="fal fa-phone-volume"></i>
+                                <i class="fal fa-calendar-times"></i>
                                 <span> بستن مطب تا تاریخ</span>
                             </span>
                         </ion-label>
@@ -100,10 +100,19 @@
                             formControlName="matab_date_close_end"></ion-datetime>
                     </ion-item>
                 </ion-col>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label>باز/بستن مطب</ion-label>
+                        <ion-toggle formControlName="matab_is_enable"></ion-toggle>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-12>
+                    <button ion-button block color="dark" [disabled]="dataForm.invalid" (click)="edit(dataForm.value)">ذخیره</button>
+                </ion-col>
             </ion-row>
         </form>
     </ion-grid>
-    <!-- <ion-list inset no-padding no-margin>
+    <ion-list inset no-padding no-margin>
         <ion-list-header>
             <ion-searchbar text-right [(ngModel)]="input_search" placeholder="نام پزشک"></ion-searchbar>
         </ion-list-header>
@@ -130,5 +139,5 @@
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="totalPage < totalData" threshold="1px">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="نمایش بیشتر"></ion-infinite-scroll-content>
-    </ion-infinite-scroll> -->
+    </ion-infinite-scroll>
 </ion-content>
