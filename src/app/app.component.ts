@@ -3,22 +3,15 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { TabsPage } from '../pages/tabs/tabs';
 import { ViewChild } from '@angular/core';
-import { CityPage } from '../pages/ostan/city/city';
-import { OstanPage } from '../pages/ostan/ostan';
-import { TypeDoctorPage } from '../pages/type.doctor/type.doctor';
-import { TypeWorkPage } from '../pages/type.doctor/type.work/type.work';
-import { CaptionDoctorPage } from '../pages/caption.doctor/caption.doctor';
-import { DoctorPage } from '../pages/doctor/doctor';
-import { MatabPage } from '../pages/matab/matab';
-import { MatabMorePage } from '../pages/matab.more/matab.more';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = MatabMorePage;
+  rootPage: any = HomePage;
+  menu: any[] = [];
   @ViewChild(Nav) nav: Nav;
   //---------------------------------------------------------------------------------
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
@@ -26,24 +19,19 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+    this.menu = [
+      { page: 'OstanPage', icon: 'fal fa-map-marker-alt fa-2x', title: 'تعریف استان ' },
+      { page: 'CityPage', icon: 'fal fa-code-branch fa-2x', title: 'تعریف شهر ' },
+      { page: 'TypeDoctorPage', icon: 'fal fa-briefcase fa-2x', title: 'تعریف انواع پزشک ' },
+      { page: 'TypeWorkPage', icon: 'fal fa-folder fa-2x', title: 'تعریف انواع ویزیت ' },
+      { page: 'CaptionDoctorPage', icon: 'fal fa-id-card fa-2x', title: 'تعریف انواع تخصص ' },
+      { page: 'DoctorPage', icon: 'fal fa-user-md fa-2x', title: 'تعریف پزشک ' },
+      { page: 'MatabPage', icon: 'fal fa-procedures fa-2x', title: 'تعاریف اولیه مطب' },
+      { page: 'MatabMorePage', icon: 'fal fa-bed fa-2x', title: 'تعاریف تکمیلی مطب' },
+    ]
   }
   //---------------------------------------------------------------------------------
-  gotToOstan() {
-    this.nav.push('OstanPage');
-  }
-  goToRule() {
-    this.nav.push('RulePage');
-  }
-  goToContactUs() {
-    this.nav.push('ContactUsPage');
-  }
-  goToAbout() {
-    this.nav.push('AboutPage');
-  }
-  goToShekayat() {
-    this.nav.push('ShekayatPage');
-  }
-  goToPaymentPage(){
-    this.nav.push('UserPayPage');
+  goToPage(value) {
+    this.nav.push(value);
   }
 }

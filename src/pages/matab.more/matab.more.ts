@@ -4,11 +4,11 @@ import { Subscription, Observable } from "rxjs";
 import { HttpService } from "../../http/HttpService";
 import { MessageUtil } from "../../util/message.util";
 import { SelectSearchableComponent } from "ionic-select-searchable";
-import { InfiniteScroll } from "ionic-angular";
+import { InfiniteScroll, IonicPage } from "ionic-angular";
 import { delay, take } from "rxjs/operators";
 import { Matab } from "../../util/global.class";
-
 import * as _ from 'lodash';
+@IonicPage()
 @Component({
     selector: 'matab-more-page',
     templateUrl: 'matab.more.html'

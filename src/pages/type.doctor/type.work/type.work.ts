@@ -82,6 +82,7 @@ export class TypeWorkPage {
             _id: [''],
             tw_code: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
             tw_name: ['', Validators.required],
+            tw_time: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]*')])],
             td: this.fb.group({ ...TD }),
         });
     }

@@ -12,7 +12,8 @@
                 <ion-col>
                     <ion-item>
                         <ion-label class="td">نوع پزشک</ion-label>
-                        <ion-select class="td" placeholder="-- انواع پزشک های قابل انتخاب --" (ionChange)="tdSelectChange($event)" okText="تائید"
+                        <ion-select class="td" placeholder="-- انواع پزشک های قابل انتخاب --" 
+                            (ionChange)="tdSelectChange($event)" okText="تائید"
                             cancelText="لغو" [(ngModel)]="td_select" [compareWith]="compareFnTD" [selectOptions]="tdOption"
                             [ngModelOptions]="{standalone: true}">
                             <ion-option *ngFor="let o of td_list" [value]="o">{{o.td_name}}</ion-option>
@@ -49,6 +50,15 @@
                             <div class="error-msg" *ngIf="dataForm.get('tw_name').hasError(validation.type) && 
                                 (dataForm.get('tw_name').dirty || dataForm.get('tw_name').touched)">{{validation.message}}</div>
                         </ng-container>
+                        <ion-item>
+                            <ion-label floating>
+                                <span>
+                                    <i class="fal fa-clock"></i>
+                                    <span>مدت زمان انجام(دقیقه)</span>
+                                </span>
+                            </ion-label>
+                            <ion-input type="number" formControlName="tw_time" autocomplete="off" text-center></ion-input>
+                        </ion-item>
                         <button ion-button block color="dark" [disabled]="dataForm.invalid || td_select == undefined" (click)="save(dataForm.value)">ذخیره</button>
                     </ion-list>
                 </ion-col>
